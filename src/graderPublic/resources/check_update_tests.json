@@ -1,0 +1,682 @@
+{
+  "testCases": [
+    {
+      "name": "OK to WARN transition",
+      "oldChecks": {
+        "CPU": {
+          "value": 60,
+          "warn": 70,
+          "crit": 90,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "CPU": {
+          "value": 75
+        }
+      },
+      "expected": {
+        "CPU": {
+          "value": 75,
+          "warn": 70,
+          "crit": 90,
+          "status": "WARN"
+        }
+      }
+    },
+    {
+      "name": "OK to CRIT transition",
+      "oldChecks": {
+        "Memory": {
+          "value": 50,
+          "warn": 70,
+          "crit": 90,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Memory": {
+          "value": 95
+        }
+      },
+      "expected": {
+        "Memory": {
+          "value": 95,
+          "warn": 70,
+          "crit": 90,
+          "status": "CRIT"
+        }
+      }
+    },
+    {
+      "name": "Add new check",
+      "oldChecks": {
+        "Disk": {
+          "value": 30,
+          "warn": 50,
+          "crit": 80,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Disk": {
+          "value": 30
+        },
+        "Network": {
+          "value": 85
+        }
+      },
+      "expected": {
+        "Disk": {
+          "value": 30,
+          "warn": 50,
+          "crit": 80,
+          "status": "OK"
+        },
+        "Network": {
+          "value": 85,
+          "warn": 0,
+          "crit": 0,
+          "status": "CRIT"
+        }
+      }
+    },
+    {
+      "name": "Remove check with zero value",
+      "oldChecks": {
+        "DB": {
+          "value": 40,
+          "warn": 60,
+          "crit": 90,
+          "status": "WARN"
+        },
+        "Cache": {
+          "value": 20,
+          "warn": 30,
+          "crit": 40,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "DB": {
+          "value": 0
+        },
+        "Cache": {
+          "value": 25
+        }
+      },
+      "expected": {
+        "Cache": {
+          "value": 25,
+          "warn": 30,
+          "crit": 40,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "De-escalate CRIT to OK",
+      "oldChecks": {
+        "API": {
+          "value": 95,
+          "warn": 70,
+          "crit": 90,
+          "status": "CRIT"
+        }
+      },
+      "newChecks": {
+        "API": {
+          "value": 60
+        }
+      },
+      "expected": {
+        "API": {
+          "value": 60,
+          "warn": 70,
+          "crit": 90,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Borderline value at WARN",
+      "oldChecks": {
+        "I/O": {
+          "value": 65,
+          "warn": 65,
+          "crit": 90,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "I/O": {
+          "value": 70
+        }
+      },
+      "expected": {
+        "I/O": {
+          "value": 70,
+          "warn": 65,
+          "crit": 90,
+          "status": "WARN"
+        }
+      }
+    },
+    {
+      "name": "Borderline value at CRIT",
+      "oldChecks": {
+        "Service": {
+          "value": 89,
+          "warn": 65,
+          "crit": 89,
+          "status": "WARN"
+        }
+      },
+      "newChecks": {
+        "Service": {
+          "value": 89
+        }
+      },
+      "expected": {
+        "Service": {
+          "value": 89,
+          "warn": 65,
+          "crit": 89,
+          "status": "WARN"
+        }
+      }
+    },
+    {
+      "name": "Negative check value still OK",
+      "oldChecks": {
+        "Temp": {
+          "value": -10,
+          "warn": 30,
+          "crit": 60,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Temp": {
+          "value": -15
+        }
+      },
+      "expected": {
+        "Temp": {
+          "value": -15,
+          "warn": 30,
+          "crit": 60,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Unchanged check",
+      "oldChecks": {
+        "Battery": {
+          "value": 45,
+          "warn": 60,
+          "crit": 80,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Battery": {
+          "value": 45
+        }
+      },
+      "expected": {
+        "Battery": {
+          "value": 45,
+          "warn": 60,
+          "crit": 80,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Zero value new check (not added)",
+      "oldChecks": {
+        "A": {
+          "value": 50,
+          "warn": 70,
+          "crit": 90,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "B": {
+          "value": 0
+        }
+      },
+      "expected": {
+        "A": {
+          "value": 50,
+          "warn": 70,
+          "crit": 90,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Random stress test 11",
+      "oldChecks": {
+        "Check_11_0": {
+          "value": 68,
+          "warn": 55,
+          "crit": 72,
+          "status": "WARN"
+        },
+        "Check_11_1": {
+          "value": 31,
+          "warn": 45,
+          "crit": 77,
+          "status": "OK"
+        },
+        "Check_11_2": {
+          "value": 84,
+          "warn": 67,
+          "crit": 94,
+          "status": "WARN"
+        },
+        "Check_11_3": {
+          "value": 59,
+          "warn": 59,
+          "crit": 98,
+          "status": "OK"
+        },
+        "Check_11_4": {
+          "value": 32,
+          "warn": 42,
+          "crit": 76,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Check_11_0": {
+          "value": 30
+        },
+        "Check_11_1": {
+          "value": 28
+        },
+        "Check_11_2": {
+          "value": 5
+        },
+        "Check_11_3": {
+          "value": 6
+        },
+        "Check_11_4": {
+          "value": 26
+        }
+      },
+      "expected": {
+        "Check_11_0": {
+          "value": 30,
+          "warn": 55,
+          "crit": 72,
+          "status": "OK"
+        },
+        "Check_11_1": {
+          "value": 28,
+          "warn": 45,
+          "crit": 77,
+          "status": "OK"
+        },
+        "Check_11_2": {
+          "value": 5,
+          "warn": 67,
+          "crit": 94,
+          "status": "OK"
+        },
+        "Check_11_3": {
+          "value": 6,
+          "warn": 59,
+          "crit": 98,
+          "status": "OK"
+        },
+        "Check_11_4": {
+          "value": 26,
+          "warn": 42,
+          "crit": 76,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Random stress test 12",
+      "oldChecks": {
+        "Check_12_0": {
+          "value": 67,
+          "warn": 53,
+          "crit": 72,
+          "status": "WARN"
+        },
+        "Check_12_1": {
+          "value": 60,
+          "warn": 64,
+          "crit": 72,
+          "status": "OK"
+        },
+        "Check_12_2": {
+          "value": 26,
+          "warn": 59,
+          "crit": 67,
+          "status": "OK"
+        },
+        "Check_12_3": {
+          "value": 47,
+          "warn": 49,
+          "crit": 75,
+          "status": "OK"
+        },
+        "Check_12_4": {
+          "value": 47,
+          "warn": 50,
+          "crit": 65,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Check_12_0": {
+          "value": 34
+        },
+        "Check_12_1": {
+          "value": 74
+        },
+        "Check_12_2": {
+          "value": 51
+        },
+        "Check_12_3": {
+          "value": 20
+        },
+        "Check_12_4": {
+          "value": 32
+        }
+      },
+      "expected": {
+        "Check_12_0": {
+          "value": 34,
+          "warn": 53,
+          "crit": 72,
+          "status": "OK"
+        },
+        "Check_12_1": {
+          "value": 74,
+          "warn": 64,
+          "crit": 72,
+          "status": "CRIT"
+        },
+        "Check_12_2": {
+          "value": 51,
+          "warn": 59,
+          "crit": 67,
+          "status": "OK"
+        },
+        "Check_12_3": {
+          "value": 20,
+          "warn": 49,
+          "crit": 75,
+          "status": "OK"
+        },
+        "Check_12_4": {
+          "value": 32,
+          "warn": 50,
+          "crit": 65,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Random stress test 13",
+      "oldChecks": {
+        "Check_13_0": {
+          "value": 29,
+          "warn": 56,
+          "crit": 82,
+          "status": "OK"
+        },
+        "Check_13_1": {
+          "value": 49,
+          "warn": 54,
+          "crit": 76,
+          "status": "OK"
+        },
+        "Check_13_2": {
+          "value": 81,
+          "warn": 44,
+          "crit": 98,
+          "status": "WARN"
+        },
+        "Check_13_3": {
+          "value": 58,
+          "warn": 45,
+          "crit": 91,
+          "status": "WARN"
+        },
+        "Check_13_4": {
+          "value": 74,
+          "warn": 60,
+          "crit": 100,
+          "status": "WARN"
+        }
+      },
+      "newChecks": {
+        "Check_13_0": {
+          "value": 55
+        },
+        "Check_13_1": {
+          "value": 27
+        },
+        "Check_13_2": {
+          "value": 15
+        },
+        "Check_13_3": {
+          "value": 27
+        },
+        "Check_13_4": {
+          "value": 118
+        }
+      },
+      "expected": {
+        "Check_13_0": {
+          "value": 55,
+          "warn": 56,
+          "crit": 82,
+          "status": "OK"
+        },
+        "Check_13_1": {
+          "value": 27,
+          "warn": 54,
+          "crit": 76,
+          "status": "OK"
+        },
+        "Check_13_2": {
+          "value": 15,
+          "warn": 44,
+          "crit": 98,
+          "status": "OK"
+        },
+        "Check_13_3": {
+          "value": 27,
+          "warn": 45,
+          "crit": 91,
+          "status": "OK"
+        },
+        "Check_13_4": {
+          "value": 118,
+          "warn": 60,
+          "crit": 100,
+          "status": "CRIT"
+        }
+      }
+    },
+    {
+      "name": "Random stress test 14",
+      "oldChecks": {
+        "Check_14_0": {
+          "value": 48,
+          "warn": 42,
+          "crit": 75,
+          "status": "WARN"
+        },
+        "Check_14_1": {
+          "value": 53,
+          "warn": 51,
+          "crit": 56,
+          "status": "WARN"
+        },
+        "Check_14_2": {
+          "value": 53,
+          "warn": 43,
+          "crit": 60,
+          "status": "WARN"
+        },
+        "Check_14_3": {
+          "value": 28,
+          "warn": 47,
+          "crit": 98,
+          "status": "OK"
+        },
+        "Check_14_4": {
+          "value": 80,
+          "warn": 63,
+          "crit": 96,
+          "status": "WARN"
+        }
+      },
+      "newChecks": {
+        "Check_14_0": {
+          "value": 3
+        },
+        "Check_14_1": {
+          "value": 55
+        },
+        "Check_14_2": {
+          "value": 70
+        },
+        "Check_14_3": {
+          "value": 73
+        },
+        "Check_14_4": {
+          "value": 58
+        }
+      },
+      "expected": {
+        "Check_14_0": {
+          "value": 3,
+          "warn": 42,
+          "crit": 75,
+          "status": "OK"
+        },
+        "Check_14_1": {
+          "value": 55,
+          "warn": 51,
+          "crit": 56,
+          "status": "WARN"
+        },
+        "Check_14_2": {
+          "value": 70,
+          "warn": 43,
+          "crit": 60,
+          "status": "CRIT"
+        },
+        "Check_14_3": {
+          "value": 73,
+          "warn": 47,
+          "crit": 98,
+          "status": "WARN"
+        },
+        "Check_14_4": {
+          "value": 58,
+          "warn": 63,
+          "crit": 96,
+          "status": "OK"
+        }
+      }
+    },
+    {
+      "name": "Random stress test 15",
+      "oldChecks": {
+        "Check_15_0": {
+          "value": 20,
+          "warn": 49,
+          "crit": 57,
+          "status": "OK"
+        },
+        "Check_15_1": {
+          "value": 50,
+          "warn": 58,
+          "crit": 78,
+          "status": "OK"
+        },
+        "Check_15_2": {
+          "value": 22,
+          "warn": 52,
+          "crit": 70,
+          "status": "OK"
+        },
+        "Check_15_3": {
+          "value": 49,
+          "warn": 51,
+          "crit": 95,
+          "status": "OK"
+        },
+        "Check_15_4": {
+          "value": 40,
+          "warn": 40,
+          "crit": 66,
+          "status": "OK"
+        }
+      },
+      "newChecks": {
+        "Check_15_0": {
+          "value": 53
+        },
+        "Check_15_1": {
+          "value": 75
+        },
+        "Check_15_2": {
+          "value": 31
+        },
+        "Check_15_3": {
+          "value": 75
+        },
+        "Check_15_4": {
+          "value": 54
+        }
+      },
+      "expected": {
+        "Check_15_0": {
+          "value": 53,
+          "warn": 49,
+          "crit": 57,
+          "status": "WARN"
+        },
+        "Check_15_1": {
+          "value": 75,
+          "warn": 58,
+          "crit": 78,
+          "status": "WARN"
+        },
+        "Check_15_2": {
+          "value": 31,
+          "warn": 52,
+          "crit": 70,
+          "status": "OK"
+        },
+        "Check_15_3": {
+          "value": 75,
+          "warn": 51,
+          "crit": 95,
+          "status": "WARN"
+        },
+        "Check_15_4": {
+          "value": 54,
+          "warn": 40,
+          "crit": 66,
+          "status": "WARN"
+        }
+      }
+    }
+  ]
+}

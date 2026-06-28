@@ -1,0 +1,22 @@
+[
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "index": 0,
+    "expected": [1]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "index": 1,
+    "expected": [0,2]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "index": 2,
+    "expected": [1,2]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0, 0, 0], [0, 1, 1, 0, 0], [0, 1, 1, 0, 0], [1, 0, 1, 1, 0], [0, 1, 1, 0, 0]],
+    "index": 3,
+    "expected": [0,2,3]
+  }
+]

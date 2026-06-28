@@ -1,0 +1,56 @@
+[
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 0,
+    "to": 0,
+    "expectedAdjacencyMatrix": [[1, 1, 0], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 0,
+    "to": 1,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 0,
+    "to": 2,
+    "expectedAdjacencyMatrix": [[0, 1, 1], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 1,
+    "to": 0,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 1,
+    "to": 1,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 1, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 1,
+    "to": 2,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 2,
+    "to": 0,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [1, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 2,
+    "to": 1,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]]
+  },
+  {
+    "adjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]],
+    "from": 2,
+    "to": 2,
+    "expectedAdjacencyMatrix": [[0, 1, 0], [1, 0, 1], [0, 1, 1]]
+  }
+]
