@@ -42,146 +42,73 @@ public class P3_RubricProvider implements RubricProvider {
                 .addChildCriteria(children)
                 .build();
     }
-
-
-    public static final Criterion H1_1_1 = createCriterion(
-            "Die Methode [[[put]]] überschreibt korrekt vorhandene Einträge.",
-            1,
-            () -> ServerMonitorTest.class.getMethod("testPutOverwriteWithSize", String.class, int.class, int.class)
-    );
-
-    public static final Criterion H1_1_2 = createCriterion(
-            "Die Methode [[[get]]] liefert korrekte Werte für vorhandene Schlüssel.",
-            1,
-            () -> ServerMonitorTest.class.getMethod("testGet", String.class, Integer.class, Boolean.class)
-    );
-
-    public static final Criterion H1_1_3 = createCriterion(
-            "Die Methode [[[hash]]] liefert korrekte Hash-Werte im erwarteten Bereich.",
-            1,
-            () -> ServerMonitorTest.class.getMethod("testHash", String.class, int.class)
-    );
-
-    public static final Criterion H1_1_4 = createCriterion(
-            "Die Methode [[[remove]]] entfernt korrekte Elemente aus Hashtabelle.",
-            1,
-            () -> ServerMonitorTest.class.getMethod("testRemoveWithSize", String.class, int.class, boolean.class)
-    );
-
-
-    public static final Criterion H1_1_5 = createCriterion(
-            "Die Methode [[[put]]] speichert Einträge an der korrekten Indexposition und behandelt Kollisionen korrekt.",
-            3,
-            () -> ServerMonitorTest.class.getMethod("testPutIndexAndChainingWithReflection")
-    );
-
-    public static final Criterion H1_1_6 = createCriterion(
-            "Die Methode [[[rollingHash]]] liefert korrekte Hash-Werte im erwarteten Bereich [Basic]",
-            1,
-            () -> ServerMonitorTest.class.getMethod("testRollingHash", String.class, int.class)
-    );
-
-    public static final Criterion H1_1_7 = createCriterion(
-            "Die Methode [[[rollingHash]]] liefert korrekte Hash-Werte im erwarteten Bereich [PRO]",
-            2,
-            () -> ServerMonitorTest.class.getMethod("testRollingHashAdv", String.class, int.class)
-    );
-
-    public static final Criterion H1_2_1 = createCriterion(
-            "The table doubles its size correctly when rehashing.",
-            1,
-            () -> RehashingTest.class.getMethod("testRehashDoublesTableSize")
-    );
-
-    public static final Criterion H1_2_2 = createCriterion(
-            "Rehashing method is invoked correctly once current size of table exceeds the given load factor.",
-            1,
-            () -> RehashingTest.class.getMethod("testRehashMethodIsTriggered")
-    );
-
-    public static final Criterion H1_2_3 = createCriterion(
-            "All the entries are preserved after successful rehashing.",
-            1,
-            () -> RehashingTest.class.getMethod("testAllEntriesRemainAfterRehash")
-    );
-
-    public static final Criterion H1_3_1 = createCriterion(
-            "Closed checks (value = 0) are removed correctly.",
-            1,
-            () -> CheckManagementTest.class.getMethod("testRemoveClosedCheck")
-    );
-
-    public static final Criterion H1_3_2 = createCriterion(
-            "New checks are added to the result correctly.",
-            1,
-            () -> CheckManagementTest.class.getMethod("testAddNewCheck")
-    );
-
-    public static final Criterion H1_3_3 = createCriterion(
-            "Status and values of existing checks are updated correctly.",
-            2,
-            () -> CheckManagementTest.class.getMethod("testStatusAndValueUpdateCorrectness")
-    );
-
-    public static final Criterion H1_1 = createParentCriterion("1.1", "Hash Tables - CRUD Operations", H1_1_1, H1_1_2, H1_1_3, H1_1_4, H1_1_5, H1_1_6, H1_1_7);
-    public static final Criterion H1_2 = createParentCriterion("1.2", "Hash Tables - Dynamic Rehashing", H1_2_1, H1_2_2, H1_2_3);
-    public static final Criterion H1_3 = createParentCriterion("1.3", "Check Management for Monitoring", H1_3_1, H1_3_2, H1_3_3);
-    public static final Criterion H1 = createParentCriterion("1", "Hash Tables", H1_1, H1_2, H1_3);
-
-
-    // ====================================================================
-    // H2 - GRAPH REPRESENTATIONS (6 Points)
+	
+	// ====================================================================
+    // H1 - BELLMAN-FORD (5 Points)
     // ====================================================================
 
-    // H2a) AdjacencyMatrix (2 Points)
-    public static final Criterion H2_1_1 = createCriterion(
-            "Die Methode [[[addEdge]]] der Klasse [[[AdjacencyMatrix]]] funktioniert vollständig korrekt",
-            1,
-            () -> AdjacencyMatrixTest.class.getMethod("testAddEdge", JsonParameterSet.class)
+    public static final Criterion H1_BF_1 = createCriterion(
+        "Die Methode [[[initSSSP]]] der Klasse [[[BellmanFordPathCalculator]]] initialisiert die Maps [[[distances]]] und [[[predecessors]]] korrekt.",
+        1,
+        () -> BellmanFordPathCalculatorTest.class.getMethod("testInitSSSP", JsonParameterSet.class)
     );
 
-    public static final Criterion H2_1_2 = createCriterion(
-            "Die Methode [[[getAdjacentIndices]]] der Klasse [[[AdjacencyMatrix]]] funktioniert vollständig korrekt",
-            1,
-            () -> AdjacencyMatrixTest.class.getMethod("testGetAdjacentIndices", JsonParameterSet.class)
+    public static final Criterion H1_BF_2 = createCriterion(
+        "Die Methode [[[relax]]] der Klasse [[[BellmanFordPathCalculator]]] aktualisiert [[[distances]]] und [[[predecessors]]] korrekt.",
+        1,
+        () -> BellmanFordPathCalculatorTest.class.getMethod("testRelax", JsonParameterSet.class)
     );
 
-    public static final Criterion H2_1_3 = createCriterion(
-            "Die Methode [[[hasEdge]]] der Klasse [[[AdjacencyMatrix]]] funktioniert vollständig korrekt",
-            1,
-            () -> AdjacencyMatrixTest.class.getMethod("testHasEdge", JsonParameterSet.class)
-
+    public static final Criterion H1_BF_3 = createUntestedCriterion(
+        "Die Methode [[[processGraph]]] der Klasse [[[BellmanFordPathCalculator]]] berechnet die kürzesten Distanzen vom Startknoten korrekt.",
+        1
     );
 
-    public static final Criterion H2_1 = createParentCriterion("2a", "AdjacencyMatrix", H2_1_1, H2_1_2, H2_1_3);
-
-    // H2b) AdjacencyGraph (4 Points)
-    public static final Criterion H2_2_1 = createCriterion(
-            "Die Methode [[[addNode]]] der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt",
-            1,
-            () -> AdjacencyGraphTest.class.getMethod("testAddNode", JsonParameterSet.class)
+    public static final Criterion H1_BF_4 = createCriterion(
+        "Die Methode [[[hasNegativeCycle]]] der Klasse [[[BellmanFordPathCalculator]]] erkennt negative Zyklen korrekt und liefert in zyklenfreien Graphen [[[false]]] zurück.",
+        1,
+        () -> BellmanFordPathCalculatorTest.class.getMethod("testHasNegativeCycle", JsonParameterSet.class)
     );
 
-//    public static final Criterion H2_2_2 = createUntestedCriterion("Die Methode [[[addEdge]]] der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt", 1);
-//
-//    public static final Criterion H2_2_3 = createUntestedCriterion("Die Methode [[[getEdge]]] der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt", 1);
-
-    public static final Criterion H2_2_2 = createCriterion("Die Methode [[[addEdge]]] der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt", 2,
-            () -> AdjacencyGraphTest.class.getMethod("testAddEdge", JsonParameterSet.class)
+    public static final Criterion H1_BF_5 = createUntestedCriterion(
+        "Die Methode [[[calculatePath]]] der Klasse [[[BellmanFordPathCalculator]]] liefert den korrekten Pfad zurück und wirft eine [[[CycleException]]], wenn ein negativer Zyklus existiert.",
+        1
     );
 
-    public static final Criterion H2_2_3 = createCriterion("Die Methode [[[getEdge]]] der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt", 2,
-            () -> AdjacencyGraphTest.class.getMethod("testGetEdge", JsonParameterSet.class)
-    );
-    public static final Criterion H2_2_4 = createCriterion(
-            "Der Konstruktor der Klasse [[[AdjacencyGraph]]] funktioniert vollständig korrekt",
-            1,
-            () -> AdjacencyGraphTest.class.getMethod("testConstructor", JsonParameterSet.class)
+    public static final Criterion H1_BF = createParentCriterion("1", "Bellman-Ford", H1_BF_1, H1_BF_2, H1_BF_3, H1_BF_4, H1_BF_5);
+
+    // ====================================================================
+    // H2 - DIJKSTRA (5 Points)
+    // ====================================================================
+
+    public static final Criterion H2_D_1 = createCriterion(
+        "Die Methode [[[initSSSP]]] der Klasse [[[DijkstraPathCalculator]]] initialisiert die Maps [[[distances]]] und [[[predecessors]]] korrekt.",
+        1,
+        () -> DijkstraPathCalculatorTest.class.getMethod("testInitSSSP", JsonParameterSet.class)
     );
 
-    public static final Criterion H2_2 = createParentCriterion("2b", "AdjacencyGraph", H2_2_1, H2_2_2, H2_2_3, H2_2_4);
+    public static final Criterion H2_D_2 = createCriterion(
+        "Die Methode [[[relax]]] der Klasse [[[DijkstraPathCalculator]]] aktualisiert [[[distances]]] und [[[predecessors]]] korrekt.",
+        1,
+        () -> DijkstraPathCalculatorTest.class.getMethod("testRelax", JsonParameterSet.class)
+    );
 
-    public static final Criterion H2 = createParentCriterion("2", "Graphenrepräsentationen", H2_1, H2_2);
+    public static final Criterion H2_D_3 = createUntestedCriterion(
+        "Die Methode [[[extractMin]]] der Klasse [[[DijkstraPathCalculator]]] liefert den Knoten mit kleinster Distanz und entfernt ihn aus [[[Q]]].",
+        1
+    );
+
+    public static final Criterion H2_D_4 = createUntestedCriterion(
+        "Die Methode [[[processGraph]]] der Klasse [[[DijkstraPathCalculator]]] berechnet die kürzesten Distanzen vom Startknoten korrekt.",
+        1
+    );
+
+    public static final Criterion H2_D_5 = createUntestedCriterion(
+        "Die Methode [[[calculatePath]]] der Klasse [[[DijkstraPathCalculator]]] liefert den korrekten Pfad zurück.",
+        1
+    );
+
+    public static final Criterion H2_D = createParentCriterion("2", "Dijkstra", H2_D_1, H2_D_2, H2_D_3, H2_D_4, H2_D_5);
 
     // ====================================================================
     // H3 - MST (8 Points)
@@ -216,9 +143,34 @@ public class P3_RubricProvider implements RubricProvider {
     public static final Criterion H3_1 =
             createParentCriterion("3_1", "Sorted, Union und ExtractMin", H3_1_a, H3_1_b, H3_1_c);
 
+    public static final Criterion H3_2_a =
+            createUntestedCriterion(
+                    "Die Methode [[[solve]]] der Klasse [[[KruskalSolver]]] funktioniert vollständig korrekt",
+                    2
+            );
+
+
+    public static final Criterion H3_2_b =
+            createUntestedCriterion(
+                    "Die Methode [[[getResultAsAdjacencyMatrix]]] der Klasse [[[KruskalSolver]]] funktioniert vollständig korrekt",
+                    1
+            );
+
+
+    public static final Criterion H3_2 =
+            createParentCriterion("3_2", "Kruskal", H3_2_a, H3_2_b);
+
+
+    public static final Criterion H3_3 =
+            createCriterion(
+                    "Die Methode [[[solve]]] der Klasse [[[PrimSolver]]] funktioniert vollständig korrekt",
+                    2,
+                    () -> PrimTest.class.getMethod("testSolve", JsonParameterSet.class)
+            );
+
     // H3 - Testing for Task H3
     public static final Criterion H3 =
-            createParentCriterion("3", "Minimale Spannbäume", H3_1);
+            createParentCriterion("3", "Minimale Spannbäume", H3_1, H3_2, H3_3);
 
 
     // ====================================================================
@@ -226,30 +178,30 @@ public class P3_RubricProvider implements RubricProvider {
     // ====================================================================
 
     public static Criterion H4_1_1 = createCriterion(
-		"Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] kann korrekt ein Netzwerk aufbauen, wenn es möglich ist, dass der Zielspieler zu Topspielern gehört.",
-		1,
-		() -> SolveProcedureTest.class.getMethod("testbuildFlowNetworkWin", JsonParameterSet.class)
+        "Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] kann korrekt ein Netzwerk aufbauen, wenn es möglich ist, dass der Zielspieler zu Topspielern gehört.",
+        1,
+        () -> SolveProcedureTest.class.getMethod("testbuildFlowNetworkWin", JsonParameterSet.class)
     );
 
     public static Criterion H4_1_2 = createCriterion(
-		"Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] kann korrekt ein Netzwerk aufbauen, auch wenn es nicht möglich ist, dass der Zielspieler zu Topspielern gehört.",
-		2,
-		() -> SolveProcedureTest.class.getMethod("testbuildFlowNetworkLoseCanBuild", JsonParameterSet.class)
+        "Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] kann korrekt ein Netzwerk aufbauen, auch wenn es nicht möglich ist, dass der Zielspieler zu Topspielern gehört.",
+        2,
+        () -> SolveProcedureTest.class.getMethod("testbuildFlowNetworkLoseCanBuild", JsonParameterSet.class)
     );
 
     public static Criterion H4_1_3 = createUntestedCriterion(
-		"Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] identifiziert korrekt Fälle, in denen kein konsistentes Netzwerk aufgebaut werden kann (z.B. aufgrund von negativen Kapazitäten) und gibt entsprechend false zurück.",
-		3
+        "Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] identifiziert korrekt Fälle, in denen kein konsistentes Netzwerk aufgebaut werden kann (z.B. aufgrund von negativen Kapazitäten) und gibt entsprechend false zurück.",
+        3
     );
 
     public static Criterion H4_1 = createParentCriterion(
-        "H4.1", 
-        "Flussnetzwerkaufbau: Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] funktioniert vollständig korrekt", 
-        H4_1_1, H4_1_2, H4_1_3);
+                "4.1",
+                "Flussnetzwerkaufbau: Die Methode [[[buildFlowNetwork]]] der Klasse [[[SolveProcedure]]] funktioniert vollständig korrekt", 
+                H4_1_1, H4_1_2, H4_1_3);
 
     public static Criterion H4_2_1 = createUntestedCriterion(
-		"Die Methode [[[solver]]] der Klasse [[[SolveProcedure]]] liefert korrekt true zurück, wenn der Zielspieler unter optimalen zukünftigen Ergebnissen zu den Topspielern gehören kann.",
-		3
+        "Die Methode [[[solver]]] der Klasse [[[SolveProcedure]]] liefert korrekt true zurück, wenn der Zielspieler unter optimalen zukünftigen Ergebnissen zu den Topspielern gehören kann.",
+        3
     );
 
 	public static Criterion H4_2_2 = createCriterion(
@@ -259,17 +211,19 @@ public class P3_RubricProvider implements RubricProvider {
 	);
     
     public static final Criterion H4_2 = createParentCriterion(
-		"H4.2", 
-		"Solver: Die Methode [[[solver]]] der Klasse [[[SolveProcedure]]] funktioniert vollständig korrekt", 
+		"4.2",
+		"Solver: Die Methode [[[solver]]] der Klasse [[[SolveProcedure]]] funktioniert vollständig korrekt",
 		H4_2_1, H4_2_2);
 
-    public static Criterion H4 = createParentCriterion("H4", "Flussnetzwerk", H4_1, H4_2);
+
+    public static Criterion H4 = createParentCriterion("4", "Flussnetzwerk", H4_1, H4_2);
+
 
     // ========== Rubric Definition ==========
     public static final Rubric RUBRIC = Rubric.builder()
             .title("P3 Public Tests")
-            .addChildCriteria(H1)
-            .addChildCriteria(H2)
+            .addChildCriteria(H1_BF)
+            .addChildCriteria(H2_D)
             .addChildCriteria(H3)
             .addChildCriteria(H4)
             .build();
@@ -277,8 +231,8 @@ public class P3_RubricProvider implements RubricProvider {
     public Rubric getRubric() {
         return Rubric.builder()
                 .title("P3 - Graphen")
-                .addChildCriteria(H1)
-                .addChildCriteria(H2, H3, H4)
+                .addChildCriteria(H1_BF, H2_D)
+                .addChildCriteria(H3, H4)
                 .build();
     }
 }

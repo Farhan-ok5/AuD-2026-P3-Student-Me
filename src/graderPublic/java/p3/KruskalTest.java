@@ -7,8 +7,7 @@ import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
-import p3.graph.Edge;
-import p3.graph.PublicEdgeFactory;
+import p3.graph.*;
 import p3.minimumSpanningTree.KruskalSolver;
 
 import java.util.ArrayList;
@@ -108,7 +107,7 @@ public class KruskalTest extends P3_TestBase {
 
         assertEquals(expected, actual, context, "The 'union' method returns an unexpected result.");
     }
-
+    
 
     @JsonParameterSetTest(value = "minimumSpanningTree/sorted.json")
     private @NonNull Set<Edge<Integer>> makeEdgesFromList(final @NonNull JsonParameterSet params) {

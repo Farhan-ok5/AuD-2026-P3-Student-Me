@@ -1,0 +1,26 @@
+[
+  {
+    "nodes": [0, 1, 2, 3, 4],
+    "start": 0,
+    "expectedDistances": [0, null, null, null, null],
+    "expectedPredecessors": [null, null, null, null, null]
+  },
+  {
+    "nodes": [10, 20, 30],
+    "start": 20,
+    "expectedDistances": [null, 0, null],
+    "expectedPredecessors": [null, null, null]
+  },
+  {
+    "nodes": [1, 2, 3, 4, 5, 6],
+    "start": 6,
+    "expectedDistances": [null, null, null, null, null, 0],
+    "expectedPredecessors": [null, null, null, null, null, null]
+  },
+  {
+    "nodes": [42],
+    "start": 42,
+    "expectedDistances": [0],
+    "expectedPredecessors": [null]
+  }
+]

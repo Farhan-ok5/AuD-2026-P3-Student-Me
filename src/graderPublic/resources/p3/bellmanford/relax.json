@@ -1,0 +1,61 @@
+[
+  {
+    "nodes": [0, 1, 2, 3],
+    "edges": [
+      [0, 5, 0, 0],
+      [0, 0, 3, 0],
+      [0, 0, 0, 4],
+      [0, 0, 0, 0]
+    ],
+    "initialDistances": [0, null, null, null],
+    "initialPredecessors": [null, null, null, null],
+    "relaxFrom": 0,
+    "relaxTo": 1,
+    "expectedDistances": [0, 5, null, null],
+    "expectedPredecessors": [null, 0, null, null]
+  },
+  {
+    "nodes": [0, 1, 2, 3],
+    "edges": [
+      [0, 5, 0, 0],
+      [0, 0, 3, 0],
+      [0, 0, 0, 4],
+      [0, 0, 0, 0]
+    ],
+    "initialDistances": [0, 2, null, null],
+    "initialPredecessors": [null, 2, null, null],
+    "relaxFrom": 0,
+    "relaxTo": 1,
+    "expectedDistances": [0, 2, null, null],
+    "expectedPredecessors": [null, 2, null, null]
+  },
+  {
+    "nodes": [0, 1, 2],
+    "edges": [
+      [0, -3, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ],
+    "initialDistances": [0, null, null],
+    "initialPredecessors": [null, null, null],
+    "relaxFrom": 0,
+    "relaxTo": 1,
+    "expectedDistances": [0, -3, null],
+    "expectedPredecessors": [null, 0, null]
+  },
+  {
+    "nodes": [0, 1, 2, 3],
+    "edges": [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 7],
+      [0, 0, 0, 0]
+    ],
+    "initialDistances": [0, null, null, null],
+    "initialPredecessors": [null, null, null, null],
+    "relaxFrom": 2,
+    "relaxTo": 3,
+    "expectedDistances": [0, null, null, null],
+    "expectedPredecessors": [null, null, null, null]
+  }
+]
