@@ -63,8 +63,12 @@ public class BellmanFordPathCalculator<N> {
      * @param start the start node {@code s} of the shortest path search
      */
     public void initSSSP(N start) {
-        // H1.1 - TODO
-        crash("Not implemented yet");
+        //TODO: H1.1
+        for (N node : graph.getNodes()) {
+            distances.put(node, Integer.MAX_VALUE);
+            predecessors.put(node, null);
+        }
+        distances.put(start, 0);
     }
 
     /**
