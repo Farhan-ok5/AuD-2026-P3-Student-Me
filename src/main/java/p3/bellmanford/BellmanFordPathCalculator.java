@@ -125,8 +125,13 @@ public class BellmanFordPathCalculator<N> {
      * @return {@code true} if a negative cycle was detected, {@code false} otherwise
      */
     public boolean hasNegativeCycle() {
-        // H1.4 - TODO
-        crash("Not implemented yet");
+        //TODO: H1.4
+        Set<Edge<N>> edges =  graph.getEdges();
+        for (Edge<N> edge : edges) {
+            if (distances.get(edge.to()) > (distances.get(edge.from()) + edge.weight())) {
+                return true;
+            }
+        }
         return false;
     }
 
