@@ -5,8 +5,6 @@ import p3.graph.Graph;
 
 import java.util.*;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * Computes single-source shortest paths in a weighted, directed {@link Graph} using the Bellman-Ford algorithm
  * (Foliensatz 6, Folie 130).
@@ -149,9 +147,35 @@ public class BellmanFordPathCalculator<N> {
      * @throws CycleException if the graph contains a negative cycle reachable from {@code start}
      */
     public List<N> calculatePath(N start, N end) {
-        // H1.5 - TODO
-        crash("Not implemented yet");
-        return null;
+        //TODO: H1.5
+        initSSSP(start);
+        processGraph();
+
+        if (hasNegativeCycle()) {
+            throw new CycleException();
+        }
+        List<N> result = new ArrayList<>();
+        N currNode = end;
+
+        do {
+            result.add(predecessors.get(currNode));
+            currNode = predecessors.get(currNode);
+            // currNode == null: falls start nicht über end erreichbar ist
+        } while (currNode != null && !currNode.equals(start));
+
+        if (currNode == null) {
+            return null;
+        }
+
+        return helpReverse(result);
+    }
+
+    private List<N> helpReverse(List<N> list) {
+        List<N> tmp = new ArrayList<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            tmp.add(list.get(i));
+        }
+        return tmp;
     }
 
     /**
