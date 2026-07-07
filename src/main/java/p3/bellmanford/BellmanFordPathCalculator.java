@@ -102,8 +102,13 @@ public class BellmanFordPathCalculator<N> {
      * reachable from the start node.</p>
      */
     public void processGraph() {
-        // H1.3 - TODO
-        crash("Not implemented yet");
+        //TODO H1.3
+        Set<Edge<N>> edges =  graph.getEdges();
+        for (int i = 0; i < edges.size(); i++) {
+            for (Edge<N> edge : edges) {
+                relax(edge);
+            }
+        }
     }
 
     /**
