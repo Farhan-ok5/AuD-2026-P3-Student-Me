@@ -105,9 +105,24 @@ public class DijkstraPathCalculator<N> {
      * @return the node in {@code Q} with the smallest entry in {@link #distances}, or {@code null} if {@code Q} is empty
      */
     public N extractMin(Set<N> Q) {
-        // H2.3 - TODO
-        crash("Not implemented yet");
-        return null;
+        //TODO: H2.3
+        if (Q == null || Q.isEmpty()) {
+            return null;
+        }
+
+        N minNode = null;
+
+        for (N node : Q) {
+            if (minNode == null || distances.get(node) < distances.get(minNode)) {
+                minNode = node;
+            }
+        }
+
+        if (minNode != null) {
+            Q.remove(minNode);
+        }
+
+        return minNode;
     }
 
     /**
