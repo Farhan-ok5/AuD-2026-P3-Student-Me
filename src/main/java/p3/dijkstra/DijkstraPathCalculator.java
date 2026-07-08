@@ -83,8 +83,15 @@ public class DijkstraPathCalculator<N> {
      * @param edge the edge {@code (u, v)} to relax
      */
     public void relax(Edge<N> edge) {
-        // H2.2 - TODO
-        crash("Not implemented yet");
+        //TODO: H2.2
+        N u = edge.from();
+        N v = edge.to();
+        if (distances.get(u) == Integer.MAX_VALUE) {return;}
+        int calcDist = distances.get(u) + edge.weight();
+        if (distances.get(v) > (calcDist)) {
+            distances.replace(v, calcDist);
+            predecessors.replace(v, u);
+        }
     }
 
     /**
