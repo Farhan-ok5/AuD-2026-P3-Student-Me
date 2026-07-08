@@ -30,7 +30,8 @@ public class KruskalSolver {
      */
     @StudentImplementationRequired
     public static <N> List<Edge<N>> sorted(final @NotNull Set<Edge<N>> edges) {
-        return null; // TODO: Task H1 (a)
+        //TODO: H3.1.1
+        return edges.stream().sorted().toList();
     }
 
 
@@ -45,7 +46,9 @@ public class KruskalSolver {
      */
     @StudentImplementationRequired
     public static <N> Set<N> union(final @NotNull Set<N> a, final @NotNull Set<N> b) {
-        return null; // TODO: Task H1 (b)
+        //TODO: H3.1.2
+        a.addAll(b);
+        return a;
     }
 
 

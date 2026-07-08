@@ -32,7 +32,8 @@ public class PrimSolver {
 
     @StudentImplementationRequired
     public static <N> N extractMin(final @NotNull Map<N, Integer> map) {
-        return null; // TODO: Task H1 (c)
+        //TODO: H3.1.3
+        return map.keySet().stream().min(Comparator.comparing(map::get)).get();
     }
 
 
