@@ -133,8 +133,16 @@ public class DijkstraPathCalculator<N> {
      * and every outgoing edge {@code (u, v)} is relaxed.</p>
      */
     public void processGraph() {
-        // H2.4 - TODO
-        crash("Not implemented yet");
+        //TODO: H2.4
+        Set<N> q = graph.getNodes();
+        N node;
+
+        while (!q.isEmpty()) {
+            node = extractMin(q);
+            for (Edge<N> edge : graph.getAllAdjacentEdges(node)) {
+                relax(edge);
+            }
+        }
     }
 
     /**
