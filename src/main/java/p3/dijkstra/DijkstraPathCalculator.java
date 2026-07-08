@@ -1,5 +1,6 @@
 package p3.dijkstra;
 
+import p3.bellmanford.CycleException;
 import p3.graph.Edge;
 import p3.graph.Graph;
 
@@ -160,9 +161,10 @@ public class DijkstraPathCalculator<N> {
      *         {@code end} is not reachable from {@code start}
      */
     public List<N> calculatePath(N start, N end) {
-        // H2.5 - TODO
-        crash("Not implemented yet");
-        return null;
+        //TODO: H2.5
+        initSSSP(start);
+        processGraph();
+        return reconstructPath(start, end);
     }
 
     /**
