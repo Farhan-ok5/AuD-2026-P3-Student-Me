@@ -154,28 +154,23 @@ public class BellmanFordPathCalculator<N> {
         if (hasNegativeCycle()) {
             throw new CycleException();
         }
+
         List<N> result = new ArrayList<>();
         N currNode = end;
 
-        do {
-            result.add(predecessors.get(currNode));
+        // currNode == null: falls start nicht über end erreichbar ist
+        while (currNode != null && !currNode.equals(start)) {
+            result.add(currNode);
             currNode = predecessors.get(currNode);
-            // currNode == null: falls start nicht über end erreichbar ist
-        } while (currNode != null && !currNode.equals(start));
+        }
 
         if (currNode == null) {
-            return null;
+            return Collections.emptyList();
         }
 
-        return helpReverse(result);
-    }
-
-    private List<N> helpReverse(List<N> list) {
-        List<N> tmp = new ArrayList<>();
-        for (int i = list.size() - 1; i >= 0; i--) {
-            tmp.add(list.get(i));
-        }
-        return tmp;
+        result.add(start);
+        Collections.reverse(result);
+        return result;
     }
 
     /**
