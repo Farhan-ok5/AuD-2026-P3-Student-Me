@@ -31,7 +31,7 @@ public class KruskalSolver {
     @StudentImplementationRequired
     public static <N> List<Edge<N>> sorted(final @NotNull Set<Edge<N>> edges) {
         //TODO: H3.1.1
-        return edges.stream().sorted().toList();
+        return edges.stream().sorted().collect(Collectors.toCollection(ArrayList::new));
     }
 
 
