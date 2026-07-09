@@ -8,6 +8,7 @@ import p3.graph.Graph;
 import p3.graph.WeightedAdjacencyMatrix;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class KruskalSolver {
 
@@ -55,7 +56,31 @@ public class KruskalSolver {
 
     @StudentImplementationRequired
     public static <N> Set<Edge<N>> solve(final @NotNull Graph<N> graph) {
-        return null; // TODO: Task H2 (a)
+        //TODO: H3.2.1
+        Set<Edge<N>> result = new HashSet<>();
+        List<Edge<N>> edges = graph.getEdges().stream().sorted().collect(Collectors.toCollection(ArrayList::new));
+        Map<N, Set<N>> nodesSets = new HashMap<>();
+
+        // jeder knoten wird mit einer menge init in der es selbst drin ist
+        for (N node : graph.getNodes()) {
+            Set<N> set = new HashSet<>();
+            set.add(node);
+            nodesSets.put(node, set);
+        }
+
+        // wenn knoten ungleiche mengen haben dann aufnehmen
+        for (Edge<N> edge : edges) {
+            Set<N> setFrom = nodesSets.get(edge.from());
+            Set<N> setTo = nodesSets.get(edge.to());
+
+            if (!setFrom.equals(setTo)) {
+                result.add(edge);
+                Set<N> union = union(setFrom, setTo);
+                nodesSets.put(edge.from(), union);
+                nodesSets.put(edge.to(), union);
+            }
+        }
+        return result;
     }
 
 
