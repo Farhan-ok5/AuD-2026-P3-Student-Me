@@ -141,6 +141,7 @@ public class SolveProcedure {
                 continue;
             }
             int playerScore = currentTeamScore.get(player);
+            // hier wird nur der einzelne Spieler gegenüber X betrachtet -> solver() sorgt für gesamtbetrachtung
             int allowedExtraPoints = maxPossiblePointsX - playerScore;
 
             // PX + M - Pi darf nicht negativ sein sonst hat X verloren
@@ -202,8 +203,47 @@ public class SolveProcedure {
      * @throws NullPointerException if {@code partialGameResults} contains {@link Game} objects with null results (score aggregation assumes non-null)
      */
     public boolean solver(final List<String> players, final List<Game> partialGameResults, final String name) {
-        // H4.2 - TODO
-        crash("Not implemented yet");
-        return false;
+        //TODO: H4.2
+        Map<String, Integer> currentTeamScore = new HashMap<>();
+        List<Game> remainingGames = new ArrayList<>();
+
+        // init
+        for (String player : players) {
+            currentTeamScore.put(player, 0);
+        }
+
+        for (Game game : partialGameResults) {
+            // Punktestand berechnen von gespielten spielen
+            if (game.getPlayer1Result() != null) {
+                String p1 = game.getPlayer1();
+                String p2 = game.getPlayer2();
+
+                int p1Score = game.getPlayer1Result().getScore();
+                int p2Score = game.getPlayer2Result().getScore();
+
+                currentTeamScore.put(p1, currentTeamScore.get(p1) + p1Score);
+                currentTeamScore.put(p2, currentTeamScore.get(p2) + p2Score);
+            }
+            // Ansonsten in List für graph bauen
+            else {
+                remainingGames.add(game);
+            }
+        }
+
+        // spieler kann nicht gewinnen
+        if (!buildFlowNetwork(players, currentTeamScore, remainingGames, name)) {
+            return false;
+        }
+
+        // gesamtbetrachtung im gegensatz zu buildFlowNetwork()
+        int expectedFlow = 0;
+        for (Game game : remainingGames) {
+            if (!name.equals(game.getPlayer1()) && !name.equals(game.getPlayer2())) {
+                expectedFlow += 2;
+            }
+        }
+
+        int actualFlow = this.networkFlow.maxFlow("SOURCE", "SINK");
+        return actualFlow == expectedFlow;
     }
 }
