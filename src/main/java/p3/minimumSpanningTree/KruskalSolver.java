@@ -47,8 +47,9 @@ public class KruskalSolver {
     @StudentImplementationRequired
     public static <N> Set<N> union(final @NotNull Set<N> a, final @NotNull Set<N> b) {
         //TODO: H3.1.2
-        a.addAll(b);
-        return a;
+        Set<N> result = new HashSet<>(a);
+        result.addAll(b);
+        return result;
     }
 
 
