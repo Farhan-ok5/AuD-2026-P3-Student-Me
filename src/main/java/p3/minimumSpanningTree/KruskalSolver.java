@@ -85,8 +85,14 @@ public class KruskalSolver {
 
 
     @StudentImplementationRequired
-    public static WeightedAdjacencyMatrix getResultAsAdjacencyMatrix( final @NotNull Graph<Integer> graph ) {
-        return null ; // TODO: Task H2 (b)
+    public static WeightedAdjacencyMatrix getResultAsAdjacencyMatrix(final @NotNull Graph<Integer> graph) {
+        //TODO: H3.2.2
+        Set<Edge<Integer>> edges = graph.getEdges();
+        WeightedAdjacencyMatrix matrix = new WeightedAdjacencyMatrix(graph.getNodes().size());
+        for (Edge<Integer> edge : edges) {
+            matrix.addEdge(edge.from(), edge.to(), edge.weight());
+        }
+        return matrix;
     }
 
 } // end of class
