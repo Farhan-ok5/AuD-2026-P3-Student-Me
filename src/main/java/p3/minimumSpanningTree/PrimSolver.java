@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+import p3.graph.Edge;
 import p3.graph.Graph;
 import p3.graph.WeightedAdjacencyMatrix;
 
@@ -39,7 +40,56 @@ public class PrimSolver {
 
     @StudentImplementationRequired
     public static WeightedAdjacencyMatrix solve(final @NonNull Graph<Integer> graph, final Integer root) {
-        return null; // TODO: Task H3
+        //TODO: H3.3
+        WeightedAdjacencyMatrix matrix = new WeightedAdjacencyMatrix(graph.getNodes().size());
+
+        Set<Integer> immutableCopy = graph.getNodes();
+        Set<Integer> q = new HashSet<>(immutableCopy);
+
+        Map<Integer, Integer> keys = new HashMap<>();
+        Map<Integer, Integer> preds = new HashMap<>();
+
+        // init
+        for (Integer node : q) {
+            keys.put(node, INFINITE);
+            preds.put(node, null);
+        }
+        keys.put(root, MINUS_INFINITE);
+
+
+        while (!q.isEmpty()) {
+            // extract-min
+            Integer u = q.stream()
+                .min(Comparator.comparing(keys::get))
+                .get();
+            q.remove(u);
+
+            Set<Edge<Integer>> adjEdges =  graph.getAllAdjacentEdges(u);
+            if (adjEdges != null) {
+                for (Edge<Integer> edge : adjEdges) {
+                    Integer v = edge.to();
+                    int weight = edge.weight();
+
+                    // falls pfeil auf u zeigt
+                    if (v.equals(u)) {
+                        v = edge.from();
+                    }
+
+                    if (q.contains(v) && weight < keys.get(v)) {
+                        keys.put(v, weight);
+                        preds.put(v, u);
+                    }
+                }
+            }
+        }
+
+        for (Integer v : immutableCopy) {
+            Integer u = preds.get(v);
+            if (u != null) {
+                matrix.addEdge(u, v, keys.get(v));
+            }
+        }
+        return matrix;
     }
 
 } // end of class
