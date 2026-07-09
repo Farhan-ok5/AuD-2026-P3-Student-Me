@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Result; passing games without results will cause a {@link NullPointerException} when scores are aggregated.
  */
 public class SolveProcedure {
-    
+
     public final NetworkFlow<String> networkFlow;
     private static final String SOURCE = "SOURCE";
     private static final String SINK = "SINK";
@@ -98,7 +98,7 @@ public class SolveProcedure {
 
     /**
      * <p>Build the flow network representing allocation of points from remaining games and store it in {@link #networkFlow}.</p>
-     * 
+     *
      * <p>
      * Examplified Topology:
      * <pre>
@@ -108,13 +108,13 @@ public class SolveProcedure {
      *        \-(2)-> game2 -(2)-> playerC -(2)-/
      * </pre>
      * </p>
-     * 
+     *
      * <p>
      * Important notes / possible errors:
      *  - The method assumes that the input lists are consistent (e.g., {@code remainingGames} should not contain games with known result, {@code currentTeamScore} should contain entries for all players, etc.). Inconsistent inputs may lead to incorrect network construction or runtime exceptions.
      *  - The network should be reset before building to avoid residual edges from previous runs; this is handled by the call to {@code resetNetwork()} at the start of the method.
      * </p>
-     * 
+     *
      * @param players list of all player identifiers
      * @param currentTeamScore map of current known scores per player
      * @param remainingGames list of unplayed games (results expected to be null for these)
@@ -122,9 +122,74 @@ public class SolveProcedure {
 	 * @return true if the residual network can be built without any inconsistencies (e.g. negative capacities), false otherwise
      */
     public boolean buildFlowNetwork(final List<String> players, final Map<String, Integer> currentTeamScore, final List<Game> remainingGames, final String name) {
-        // H4.1 - TODO
-        crash("Not implemented yet");
-        return false;
+        //TODO: H4.1
+        //networkFlow.reset();
+        int scoreX = currentTeamScore.get(name);
+        int maxExtrapointsX = 0;
+
+        // spielerX gewinnt all seine restlichen spiele
+        for (Game game : remainingGames) {
+            if (name.equals(game.getPlayer1()) || name.equals(game.getPlayer2())) {
+                maxExtrapointsX += 2;
+            }
+        }
+        int maxPossiblePointsX = scoreX + maxExtrapointsX;
+
+        // andere spieler können keine negativen Punkte erhalten
+        for (String player : players) {
+            if (player.equals(name)) {
+                continue;
+            }
+            int playerScore = currentTeamScore.get(player);
+            int allowedExtraPoints = maxPossiblePointsX - playerScore;
+
+            // PX + M - Pi darf nicht negativ sein sonst hat X verloren
+            if (allowedExtraPoints < 0) {
+                return false;
+            }
+        }
+
+        // 10min
+        // Reminder: graph without X
+        //
+        //                A                B                  C
+        //                |     Game 1     |     Player 1     |
+        //                |      ...       |       ...        |
+        //     SOURCE     |      ...       |       ...        |     SINK
+        //                |      ...       |       ...        |
+        //                |     Game n     |     Player m     |
+        //                ^                ^                  ^
+        //   Edgescount:  n               2*n                 m
+
+        String source = "SOURCE";
+        String sink = "SINK";
+
+        // Edges at C
+        for (String player : players) {
+            if (player.equals(name)) {
+                continue;
+            }
+            int allowedExtraPoints = maxPossiblePointsX - currentTeamScore.get(player);
+            networkFlow.addEdge(player, sink, allowedExtraPoints);
+        }
+
+        int gameIndex = 0;
+        for (Game game : remainingGames) {
+            String p1 = game.getPlayer1();
+            String p2 = game.getPlayer2();
+
+            if (!name.equals(p1) && !name.equals(p2)) {
+                String gameNode = "Game_" + gameIndex;
+                // Edge at A
+                networkFlow.addEdge(source, gameNode, 2);
+                // Edges at B
+                networkFlow.addEdge(gameNode, p1, 2);
+                networkFlow.addEdge(gameNode, p2, 2);
+            }
+            gameIndex++;
+        }
+
+        return true;
     }
 
     /**
